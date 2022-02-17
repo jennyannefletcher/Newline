@@ -17,7 +17,6 @@ Inspect the element with Dev Tools and notice the `primary` and `in-button` clas
 
 ![](./public/assets/class.png)
 
-
 ### Primary
 
 You don't have to give up modern conveniences like CSS-in-JS even though the CSS has to be declared in an external `<style>` tag that can be accessed by instances of the `ButtonComponent`. In Button.ts, declare a `const` named `buttonStyles` and make it equal to a template string. Select the primary button variant with the selector `.in-button.primary` and set the styling per the mockup in Figma. 
@@ -97,7 +96,6 @@ To ensure the SVG fits within the dimensions of the 44px button, select the `svg
 When you have finished, the icon variant should appear by default as it does in Figma.
 
 ![](./public/assets/icon.png)
-
 
 ### Interaction States
 
