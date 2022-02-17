@@ -6,7 +6,7 @@ isPublicLesson: true
 
 # Testing ButtonComponent
 
-We could setup an integration test for `ButtonComponent`, however that kind of end to end testing will be reserved for part three of this book when you develop a login form in the context of an application. Snapshot tests provide the most value at this point in time. After developing several interaction states for `ButtonComponent`, you can validate the styling of the button most effectively with snapshots.
+We could setup an integration test for `ButtonComponent`, but that kind of end to end testing is reserved for part three of this book when you develop a login form in the context of an application. Snapshot tests provide the most value at this point in time. After developing several interaction states for the `ButtonComponent`, you can validate the styling of the button most effectively with snapshots.
 
 
 Ensure Storybook is running in a Terminal window.
@@ -16,20 +16,20 @@ Ensure Storybook is running in a Terminal window.
 yarn storybook
 ```
 
-With Storybook running generate snapshots for the component in another Terminal window.
+With Storybook running generate snapshots for the component in another terminal window.
 
 ```bash
 yarn test:snapshot:ci
 ```
 
-When running the snapshots you'll notice a failure in the Form snapshot. Open the image file that displays the differences between the previous snapshot and current in the directory packages/component/src/input/__snapshots__/__diff_output__. Upon inspection, you realize the diff is because you added a bottom margin with CSS to the form controls in the layout. No harm, no foul. This change was intentional. To fix the snapshots, delete the __diff_output__ directory and delete the existing snapshot.
+When running the snapshots you'll notice a failure in the Form snapshot. Open the image file that displays the differences between the previous snapshot and current one in the directory packages/component/src/input/__snapshots__/__diff_output__. Upon inspection, you'll realize the diff is because you added a bottom margin with CSS to the form controls in the layout. No harm, no foul. This change was intentional. To fix the snapshots, delete the __diff_output__ directory and delete the existing snapshot.
 
 ```bash
 rm -rf packages/component/src/input/__snapshots__/__diff_output__
 rm packages/component/src/input/__snapshots__/web-components-storyshots-test-js-storyshots-components-inputs-text-input-form-1-snap.png
 ```
 
-Run the snapshot tests again. Since you deleted the offending snapshot, a new file will be generated in place.
+Run the snapshot tests again. Since you deleted the offending snapshot, a new file will be generated in its place.
 
 ```bash
 yarn test:snapshot:ci
@@ -39,7 +39,7 @@ yarn test:snapshot:ci
 After snapshots have been generated for each story, add them to your commit.
 
 
-Before concluding this chapter, check if any tests are broken due to the most recent changes. You did refactor the code in packages/component/src/input/TextInput.stories.js quite a bit to include the `HTMLButtonElement` element in the template.
+Before concluding this chapter, check if any tests have been broken due to the most recent changes. You did refactor the code in packages/component/src/input/TextInput.stories.js quite a bit to include the `HTMLButtonElement` element in the template.
 
 ```bash
 yarn test:e2e
