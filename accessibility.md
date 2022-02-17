@@ -6,9 +6,9 @@ isPublicLesson: true
 
 ## Making the form accessible
 
-The decisions we've made have so far in developing the login form have resulted in half-baked accessibility for users who rely on the keyboard to navigate. The `TextInputComponent` has some accessibility limitations. We've provided a CSS classname for visual feedback, but this poses a problem for the visually impaired, who can't see the feedback when the input becomes invalid. Furthermore, unless we provide some additional context using WAI-ARIA, screen readers can't access validations appended to the Shadow DOM.
+The decisions we've made in developing the login form have so far resulted in half-baked accessibility for users who rely on the keyboard to navigate. The `TextInputComponent` has some accessibility limitations. We've provided a CSS classname for visual feedback, but this poses a problem for the visually impaired, who can't see the feedback when the input becomes invalid. Furthermore, unless we provide some additional context using WAI-ARIA, screen readers can't access validations appended to the Shadow DOM.
 
-While the `ButtonComponent` is useable via keyboard input by virtue of extending from the `HTMLButtonElement`, the addition of an SVG in the icon variant prevents visually impaired users from understanding the context of the button element. Screen readers rely on the content of the button to provide a label, which the primary and secondary button variants handle already. The icon variant lacks a text label that screen readers can analyze and read aloud to the user. 
+While the `ButtonComponent` is useable via keyboard input since it extends from the `HTMLButtonElement`, the addition of an SVG in the icon variant prevents visually impaired users from understanding the context of the button element. Screen readers rely on the content of the button to provide a label, which the primary and secondary button variants already handle. The icon variant, however, lacks a text label that screen readers can analyze and read aloud to the user. 
 
 In this section, you'll use WAI-ARIA attributes to solve two distinct problems with the form:
 - screen readers cannot analyze the button label in the icon variant 
@@ -45,18 +45,18 @@ For the remainder of this chapter, use the `Form` and `Icon` stories as a test b
 
 ### Using a screen reader
  
- Screen readers are applications that blind, visually impaired, and dyslexic people use to interact with operating systems. Using a synthesized voice and other visual cues, screen readers provide contextual information about what the user currently has focused in a user interface. NVDA is the most popular screen reader application for Windows, while VoiceOver is built into MacOS and other Apple operating systems.
+ Screen readers are applications that blind, visually impaired, and dyslexic people use to interact with operating systems. Using a synthesized voice and other visual cues, screen readers provide contextual information about what the user currently has focused on the user interface. NVDA is the most popular screen reader application for Windows, while VoiceOver is built into MacOS and other Apple operating systems.
 
  If you've never used a screen reader application before, follow the steps below to install and open NVDA or VoiceOver for Windows and MacOS, respectively.
  
 #### Windows
 
-NVDA, short for NonVisual Desktop Access, is a Windows application available for free in the Microsoft Store. To install NVDA, sign in to the Microsoft Store in the Microsoft Store application.
+NVDA, short for NonVisual Desktop Access, is a Windows application available for free from the Microsoft Store. To install NVDA, sign into the Microsoft Store in the Microsoft Store application.
 
 ![](./public/assets/nvda-microsoft-store.png)
 
 
-After you have signed in to the Microsoft Store, search for NVDA, select the application in the search results, and click the **Install** button. Follow on-screen prompts to install NVDA. 
+After you have signed in to the Microsoft Store, search for NVDA, select the application in the search results, and click the **Install** button. Follow the on-screen prompts to install NVDA. 
 
 Once NVDA is installed, access NVDA application preferences in the Windows Taskbar.
 
@@ -76,18 +76,18 @@ During development, you may have to change context rapidly between IDE and brows
 
 ![](./public/assets/voiceover-turn-off-voice.png)
 
-Another option you may find useful during development is the ability to hide the VoiceOver cursor. In your IDE, the VoiceOver cursor displays an overlayed cursor for the visually impaired. However, this can interfere with typing for some users. 
+Another option you may find useful during development is the ability to hide the VoiceOver cursor. In your IDE, the VoiceOver cursor displays an overlayed cursor for the visually impaired. However, for some users this can interfere with typing.
 
 Once you have a screen reader installed, proceed to the following sections. If you've never used a screen reader before, hopefully you'll find a process for developing with a screen reader that works best for you. 
 
 
 ### Providing context to the icon variant
 
-Earlier in this chapter, you developed the icon variant of `ButtonComponent`. However, since the label is effectively replaced by an SVG, screen readers can no longer analyze the content of the button element. 
+Earlier in this chapter, you developed the icon variant of the `ButtonComponent`. However, since the label is effectively replaced by an SVG, screen readers can no longer analyze the content of the button element. 
 
 Depending on your operating system, activate NVDA or VoiceOver and leave them running when testing your changes during development for the remainder of this chapter.
 
-If you haven't already, activate the screen reader application and navigate to the `Primary` button story in Storybook. Click on the whitespace in the Storybook canvas to give it focus, then press the Tab key to focus the primary button. Observe how the screen reader announces the label, followed by the element name.
+If you haven't already done it, activate the screen reader application and navigate to the `Primary` button story in Storybook. Click on the whitespace in the Storybook canvas to focus it, then press the Tab key to focus the primary button. Observe how the screen reader announces the label, followed by the element name.
 
 ![](./public/assets/voiceover-submit.png)
 
@@ -98,7 +98,7 @@ Navigate to the `Icon` story and focus the close button. Notice how the screen r
 ![](./public/assets/voiceover-icon.png)
 
 
-To provide context for the screen reader, you'll need to use WAI-ARIA attributes, namely `aria-labelledby` and `hidden`. 
+To provide context for the screen reader, you'll have to use WAI-ARIA attributes, namely `aria-labelledby` and `hidden`. 
 
 Update the `Icon.args` to support the SVG and the label. This change will conflict with other stories in the same file. Make a new template for the icon variant named `IconTemplate` based off the existing `Template` so that you don't interfere with other stories in Button.stories.js. 
 
@@ -133,7 +133,7 @@ Finally, to prevent screen readers from analyzing the SVG, set the `aria-hidden`
 <<[Button.stories.js](./protected/src/Button-a11y.stories.js)
 
 
-Navigate to the Icon story in Storybook again and focus the icon button with the screen reader activated. Notice how the screen reader now acts as though the button is labeled directly, as in the case of primary and secondary buttons.
+Navigate to the Icon story in Storybook again and focus the icon button with the screen reader activated. Notice how the screen reader now acts as though the button is labeled directly, as is the case of primary and secondary buttons.
 
 ![](./public/assets/voiceover-icon-correct.png)
 
@@ -142,16 +142,16 @@ Navigate to the Icon story in Storybook again and focus the icon button with the
 
 ### Providing validation messages to screen readers
 
-The validation messages that appear when the `TextInputComponent` is invalid are a custom implementation. Browsers don't have a native container for validation messages that screen readers automatically analyze. When the validation messages appear visually, we must provide the same contextual information for the screen reader. We can achieve this through the use of WAI-ARIA attributes `aria-describedby`, `aria-role`, `aria-live`, and `aria-invalid`. 
+The validation messages that appear when the `TextInputComponent` is invalid are custom implemented. Browsers don't have a native container for validation messages that screen readers automatically analyze. When the validation messages appear visually, we must provide the same contextual information for the screen reader. We can achieve this through the use of WAI-ARIA attributes `aria-describedby`, `aria-role`, `aria-live`, and `aria-invalid`. 
 
 In the `TextInputComponent` template, set an `id` attribute to `message` on the messages container. Link the input element to the messages container by setting the `aria-describedby` attribute to the same id: `message`. Since the messages container is just a `div`, give the screen reader more information about this element. `aria-role` set to `alert` notifies the screen reader this element contains an alert notification. When the `aria-live` attribute is set to `assertive`, it gives the messages contained in the div element precendence over other announcements made by the screen reader. 
 
 {lang=javascript,line-numbers=off,crop-start-line=70,crop-end-line=77}
 <<[TextInput.ts](./protected/src/TextInput.ts)
 
-Navigate to the Form story and test the validations with a screen reader. Notice how the application reads back the messages. This is a huge win for accessibility because each validation message provides context for how the user can correct the form field. 
+Navigate to the Form story and test the validations with a screen reader. Notice how the application reads back the messages. This is a huge win for accessibility because each validation message provides context on how the user can correct the form field. 
 
-We can do a little bit more work to enhance the functionality for screen readers during validation to improve the user experience at the same time. Right now, when the form field is invalid, the validation messages are visible until the input element is blurred. If the validations were cleared as the user was typing, it would allow the visually impaired to focus on what they are typing rather than listen to the feedback of the validation messages. When the user blurs, validation will kick in and announce validation messages again, but not until then.
+We can do a little bit more to enhance the functionality for screen readers during validation and improve the user experience at the same time. Right now, when the form field is invalid, the validation messages are visible until the input element is blurred. If the validations were cleared as the user was typing, it would allow the visually impaired to focus on what they are typing rather than listen to the feedback of the validation messages. When the user blurs, validation will kick in and announce validation messages again, but not until then.
 
 There's also one other problem to solve. Currently, the input element receives a classname `error` to show the field is invalid, but there isn't similar feedback for the screen reader. Correct this behavior by finding where the `error` classname is set in validator.ts and use the `aria-invalid` attribute set to `true` to notify screen readers that the input is invalid.
 
