@@ -16,17 +16,14 @@ In this section, you'll use WAI-ARIA attributes to solve two distinct problems w
 
 First, you'll add the `ButtonComponent` to the `Form` story in TextInput.stories.js so that you can use the `FormTemplate` as your development environment. After a brief introduction on using a screen reader during development, you'll use WAI-ARIA attributes to provide all the necessary context the screen reader needs to navigate the form.
 
-
 ### Button Form
 
 In this chapter, you've developed the `ButtonComponent` in isolation, so let's see what happens when you integrate the component into the existing Form story in TextInput.stories.js.
 
 Import the `ButtonComponent` into TextInput.stories.js.
 
-
 {lang=javascript,line-numbers=off,crop-start-line=3,crop-end-line=3}
 <<[TextInput.stories.js](./protected/src/TextInput.stories.js)
-
 
 Swap the `input type="submit"` in `FormTemplate` with the `button`. Set the `is` attribute to `in-button` on the button element in the `FormTemplate` so that the browser can interpret the buttons as a customized built-in element. Add the appropriate classnames to the submit button. According to Figma, the submit button is a primary variant of the `ButtonComponent`. 
 
@@ -55,7 +52,6 @@ NVDA, short for NonVisual Desktop Access, is a Windows application available for
 
 ![](./public/assets/nvda-microsoft-store.png)
 
-
 After you have signed in to the Microsoft Store, search for NVDA, select the application in the search results, and click the **Install** button. Follow the on-screen prompts to install NVDA. 
 
 Once NVDA is installed, access NVDA application preferences in the Windows Taskbar.
@@ -80,7 +76,6 @@ Another option you may find useful during development is the ability to hide the
 
 Once you have a screen reader installed, proceed to the following sections. If you've never used a screen reader before, hopefully you'll find a process for developing with a screen reader that works best for you. 
 
-
 ### Providing context to the icon variant
 
 Earlier in this chapter, you developed the icon variant of the `ButtonComponent`. However, since the label is effectively replaced by an SVG, screen readers can no longer analyze the content of the button element. 
@@ -91,12 +86,9 @@ If you haven't already done it, activate the screen reader application and navig
 
 ![](./public/assets/voiceover-submit.png)
 
-
 Navigate to the `Icon` story and focus the close button. Notice how the screen reader only provides the element because there is no contextual information that labels the button element.
 
-
 ![](./public/assets/voiceover-icon.png)
-
 
 To provide context for the screen reader, you'll have to use WAI-ARIA attributes, namely `aria-labelledby` and `hidden`. 
 
@@ -132,11 +124,9 @@ Finally, to prevent screen readers from analyzing the SVG, set the `aria-hidden`
 {lang=javascript,line-numbers=off,crop-start-line=11,crop-end-line=11}
 <<[Button.stories.js](./protected/src/Button-a11y.stories.js)
 
-
 Navigate to the Icon story in Storybook again and focus the icon button with the screen reader activated. Notice how the screen reader now acts as though the button is labeled directly, as is the case of primary and secondary buttons.
 
 ![](./public/assets/voiceover-icon-correct.png)
-
 
 `aria-labelledby` provides a pointer to an element with an `id` that contains the label for the button element. You hid the span element from sight using `hidden` and used the `aria-hidden` attribute to hide the SVG from screen readers. A combination of all of these WAI-ARIA attributes allows the icon variant of the `ButtonComponent` to work with a screen reader.
 
