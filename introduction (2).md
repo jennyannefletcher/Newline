@@ -66,7 +66,6 @@ This exercise mostly involves styling the different states of the `ButtonCompone
 
 Only some customized built-in elements can encapsulate styling and template with Shadow DOM: `HTMLBodyElement`, `HTMLDivElement`, ` HTMLHeadingElement`, `HTMLParagraphElement`, and `HTMLSpanElement`. This means the CSS for most customized built-in elements must be in a `<style>` tag external to the element. You could, as a rule of thumb, add a CSS classname to customized built-in elements so that an external stylesheet can target them. Traditionally, you would declare the CSS in the `<head>`, but if the customized built-in element is used within the context of another element's `ShadowRoot`, that styling can't cross the shadow boundary, leaving the element unstyled. To work around this limitation, you'll code a function that traverses DOM for the nearest `ShadowRoot` and injects the styles from there.
 
-
 After completing the styling for the `ButtonComponent`, you'll circle back and check if the form is accessible. Using a screen reader, you'll make the form accessible by utilizing the `Accessibility Object Model` on the `ElementInternals` interface or through the use of WAI-ARIA attributes. 
 
 
