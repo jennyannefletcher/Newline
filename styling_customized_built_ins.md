@@ -20,7 +20,6 @@ Inspect the element with Dev Tools and notice the `primary` and `in-button` clas
 
 ### Primary
 
-
 You don't have to give up modern conveniences like CSS-in-JS even though the CSS has to be declared in an external `<style>` tag that can be accessed by instances of the `ButtonComponent`. In Button.ts, declare a `const` named `buttonStyles` and make it equal to a template string. Select the primary button variant with the selector `.in-button.primary` and set the styling per the mockup in Figma. 
 
 {lang=javascript,line-numbers=off,crop-start-line=1,crop-end-line=15}
@@ -45,7 +44,6 @@ In Storybook, you should see a button that is styled as the primary variant.
 Inspect the`<head>` tag in Dev Tools and observe a new `<style>` tag with the CSS declared as `buttonStyles` injected into the style element. If you have trouble seeing the tag, ensure the JavaScript context is set to storybook-preview-iframe in Dev Tools.
 
 ![](./public/assets/head.png)
-
 
 That's it for the default primary styles. Style the secondary and icon variants before you work on the styles for each button state: disabled, active, and focused. That'll save time because looking at the Figma, it appears all the buttons share the styling for the various states, while they differ in their default styles.
 
