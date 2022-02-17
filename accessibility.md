@@ -8,32 +8,32 @@ isPublicLesson: true
 
 The decisions we've made have so far in developing the login form have resulted in half-baked accessibility for users who rely on the keyboard to navigate. The `TextInputComponent` has some accessibility limitations. We've provided a CSS classname for visual feedback, but this poses a problem for the visually impaired, who can't see the feedback when the input becomes invalid. Furthermore, unless we provide some additional context using WAI-ARIA, screen readers can't access validations appended to the Shadow DOM.
 
-While `ButtonComponent` is useable via keyboard input by virtue of extending from `HTMLButtonElement`, the addition of an SVG in the icon variant prohibits visually impaired users from understanding the context of the button element. Screen readers rely on the content of the button to provide a label, which the primary and secondary button variants handle already. The icon variant lacks a text label that screen readers can analyze and read aloud to the user. 
+While the `ButtonComponent` is useable via keyboard input by virtue of extending from the `HTMLButtonElement`, the addition of an SVG in the icon variant prevents visually impaired users from understanding the context of the button element. Screen readers rely on the content of the button to provide a label, which the primary and secondary button variants handle already. The icon variant lacks a text label that screen readers can analyze and read aloud to the user. 
 
 In this section, you'll use WAI-ARIA attributes to solve two distinct problems with the form:
 - screen readers cannot analyze the button label in the icon variant 
 - screen readers cannot read the validation messages so that users who rely on screen readers can understand what is needed to validate each form field
 
-First, you'll add `ButtonComponent` to the `Form` story in TextInput.stories.js so that you can use `FormTemplate` as your development environment. After a brief introduction to using a screen reader during development, you'll use WAI-ARIA attributes to provide all the necessary context the screen reader requires to aid in navigating the form.
+First, you'll add the `ButtonComponent` to the `Form` story in TextInput.stories.js so that you can use the `FormTemplate` as your development environment. After a brief introduction on using a screen reader during development, you'll use WAI-ARIA attributes to provide all the necessary context the screen reader needs to navigate the form.
 
 
 ### Button Form
 
-In this chapter, you've developed `ButtonComponent` in isolation, so let's see what happens when you integrate the component into the existing Form story in TextInput.stories.js.
+In this chapter, you've developed the `ButtonComponent` in isolation, so let's see what happens when you integrate the component into the existing Form story in TextInput.stories.js.
 
-Import `ButtonComponent` into TextInput.stories.js.
+Import the `ButtonComponent` into TextInput.stories.js.
 
 
 {lang=javascript,line-numbers=off,crop-start-line=3,crop-end-line=3}
 <<[TextInput.stories.js](./protected/src/TextInput.stories.js)
 
 
-Swap out the `input type="submit"` in `FormTemplate` for the a `button`. Set the `is` attribute to `in-button` on the button element in `FormTemplate` so that the browser can interpret the buttons as a customized built-in element. Add the appropriate classnames to the submit button. According to Figma, the submit button is a primary variant of the `ButtonComponent`. 
+Swap the `input type="submit"` in `FormTemplate` with the `button`. Set the `is` attribute to `in-button` on the button element in the `FormTemplate` so that the browser can interpret the buttons as a customized built-in element. Add the appropriate classnames to the submit button. According to Figma, the submit button is a primary variant of the `ButtonComponent`. 
 
 {lang=javascript,line-numbers=off,crop-start-line=156,crop-end-line=156}
 <<[TextInput.stories.js](./protected/src/TextInput.stories.js)
 
-That's it! Since `ButtonComponent` is a customized built-in element, integration was a snap. The elements in the layout appear very close vertically and don't have the same margin between them as the mockup in Figma. To fix this issue with the layout, add a global style to packages/style/style.css. Select each instance of `TextInputComponent` with a CSS classname: `.form-control` and set `margin-bottom`.
+That's it! Since the `ButtonComponent` is a customized built-in element, integration was a snap. The elements in the layout appear very close vertically and don't have the same margin between them as the mockup in Figma. To fix this issue with the layout, add a global style to packages/style/style.css. Select each instance of the `TextInputComponent` with a CSS classname: `.form-control` and set the `margin-bottom`.
 
 ```css
 .form-control {
@@ -41,17 +41,17 @@ That's it! Since `ButtonComponent` is a customized built-in element, integration
 }  
 ```
 
-For the remainder of this chapter, use the `Form` and `Icon` stories as a test bed for providing accessibility features to `ButtonComponent` and `TextInputComponent`.  
+For the remainder of this chapter, use the `Form` and `Icon` stories as a test bed for providing accessibility features to the `ButtonComponent` and the `TextInputComponent`.  
 
 ### Using a screen reader
  
- Screen readers are applications that blind, visually impaired, and dyslexic people use to interact with operating systems. Through the use of a synthesized voice and other visual cues, screen readers provide contextual information about what the user currently has focused in a user interface. NVDA is the most popular screen reader application for Windows, while VoiceOver is built into MacOS and other Apple operating systems.
+ Screen readers are applications that blind, visually impaired, and dyslexic people use to interact with operating systems. Using a synthesized voice and other visual cues, screen readers provide contextual information about what the user currently has focused in a user interface. NVDA is the most popular screen reader application for Windows, while VoiceOver is built into MacOS and other Apple operating systems.
 
  If you've never used a screen reader application before, follow the steps below to install and open NVDA or VoiceOver for Windows and MacOS, respectively.
  
 #### Windows
 
-NVDA, short for NonVisual Desktop Access, is a Windows application available for free on the Microsoft Store. To install NVDA, sign in to the Microsoft Store in the Microsoft Store application.
+NVDA, short for NonVisual Desktop Access, is a Windows application available for free in the Microsoft Store. To install NVDA, sign in to the Microsoft Store in the Microsoft Store application.
 
 ![](./public/assets/nvda-microsoft-store.png)
 
@@ -100,7 +100,7 @@ Navigate to the `Icon` story and focus the close button. Notice how the screen r
 
 To provide context for the screen reader, you'll need to use WAI-ARIA attributes, namely `aria-labelledby` and `hidden`. 
 
-`Icon.args` need to be updated to support the SVG and the label. This change will conflict with other stories in the same file. So you don't interfere with other stories in Button.stories.js, make a new template for the icon variant named `IconTemplate` based off the existing `Template`. 
+Update the `Icon.args` to support the SVG and the label. This change will conflict with other stories in the same file. Make a new template for the icon variant named `IconTemplate` based off the existing `Template` so that you don't interfere with other stories in Button.stories.js. 
 
 {lang=javascript,line-numbers=off,crop-start-line=25,crop-end-line=25}
 <<[Button.stories.js](./protected/src/Button-a11y.stories.js)
@@ -120,45 +120,45 @@ Update `IconTemplate` to passing the `svg` where `label` was once in the templat
 {lang=javascript,line-numbers=off,crop-start-line=31,crop-end-line=32}
 <<[Button.stories.js](./protected/src/Button-a11y.stories.js)
 
-Next, create a `<span>` tag before the `svg` and set the span element's content with the `label`. To hide the span visually, add the `hidden` attribute, which tells the browser this element should be hidden from view. Add the `id` attribute to the span element, setting the `id` to `close-button-label`. This `id` is required for the WAI-ARIA attribute `aria-labelledby`, which needs a unique `id`. 
+Next, create a `<span>` tag before the `svg` and set the span element's content with the `label`. To hide the span visually, add the `hidden` attribute, which tells the browser to hide this element from view. Add the `id` attribute to the span element, setting the `id` to `close-button-label`. This `id` is required for the WAI-ARIA attribute `aria-labelledby`, which needs a unique `id`. 
 
 On the button element, set `aria-labelledby` to the `id` of the span, linking the two elements together for screen readers. 
 
 {lang=javascript,line-numbers=off,crop-start-line=25,crop-end-line=32}
 <<[Button.stories.js](./protected/src/Button-a11y.stories.js)
 
-Finally, to ensure that screen readers do not analyze the SVG, set the `aria-hidden` attribute to `true` on the svg element in Button.stories.js.
+Finally, to prevent screen readers from analyzing the SVG, set the `aria-hidden` attribute to `true` on the svg element in Button.stories.js.
 
 {lang=javascript,line-numbers=off,crop-start-line=11,crop-end-line=11}
 <<[Button.stories.js](./protected/src/Button-a11y.stories.js)
 
 
-Navigate again to the Icon story in Storybook and focus the icon button with the screen reader activated. Notice how the screen reader now behaves the same way as if the button was directly labeled, like in the case of primary and secondary buttons.
+Navigate to the Icon story in Storybook again and focus the icon button with the screen reader activated. Notice how the screen reader now acts as though the button is labeled directly, as in the case of primary and secondary buttons.
 
 ![](./public/assets/voiceover-icon-correct.png)
 
 
-`aria-labelledby` provides a pointer to an element with an `id` that contains the label for the button element. You visually hid the span element using `hidden` and used the `aria-hidden` attribute to hide the SVG from screen readers. A combination of all of these WAI-ARIA attributes allows the icon variant of `ButtonComponent` to work with a screen reader.
+`aria-labelledby` provides a pointer to an element with an `id` that contains the label for the button element. You hid the span element from sight using `hidden` and used the `aria-hidden` attribute to hide the SVG from screen readers. A combination of all of these WAI-ARIA attributes allows the icon variant of the `ButtonComponent` to work with a screen reader.
 
 ### Providing validation messages to screen readers
 
-The validation messages that appear when `TextInputComponent` is invalid are a custom implementation. Browsers don't have a native container for validation messages that screen readers automatically analyze. While the validation messages appear visually, we need to provide the same contextual information for the screen reader. This can be achieved through the use of WAI-ARIA attributes `aria-describedby`, `aria-role`, `aria-live`, and `aria-invalid`. 
+The validation messages that appear when the `TextInputComponent` is invalid are a custom implementation. Browsers don't have a native container for validation messages that screen readers automatically analyze. When the validation messages appear visually, we must provide the same contextual information for the screen reader. We can achieve this through the use of WAI-ARIA attributes `aria-describedby`, `aria-role`, `aria-live`, and `aria-invalid`. 
 
-In `TextInputComponent` template, set an `id` attribute to `message` on the messages container. Link the input element to the messages container by setting the `aria-describedby` attribute to the same id: `message`. Since the messages container is just a `div`, give the screen reader more information about this element. `aria-role` set to `alert` notifies the screen reader this element contains an alert notification, while the `aria-live` attribute set to `assertive` gives the messages contained in the div element precendence over other announcements made by the screen reader. 
+In the `TextInputComponent` template, set an `id` attribute to `message` on the messages container. Link the input element to the messages container by setting the `aria-describedby` attribute to the same id: `message`. Since the messages container is just a `div`, give the screen reader more information about this element. `aria-role` set to `alert` notifies the screen reader this element contains an alert notification. When the `aria-live` attribute is set to `assertive`, it gives the messages contained in the div element precendence over other announcements made by the screen reader. 
 
 {lang=javascript,line-numbers=off,crop-start-line=70,crop-end-line=77}
 <<[TextInput.ts](./protected/src/TextInput.ts)
 
 Navigate to the Form story and test the validations with a screen reader. Notice how the application reads back the messages. This is a huge win for accessibility because each validation message provides context for how the user can correct the form field. 
 
-We can do a little bit more work to enhance the functionality for screen readers during validation while also making the user experience for everyone else much better. Right now, when the form field is invalid, the validation messages are not hidden until the input element is blurred. If the validations were cleared as the user was typing, it would allow the visually impaired to focus on what they are typing rather than listen to the feedback of the validation messages. When the user blurs, validation will kick in and announce validation messages again, but not until then.
+We can do a little bit more work to enhance the functionality for screen readers during validation to improve the user experience at the same time. Right now, when the form field is invalid, the validation messages are visible until the input element is blurred. If the validations were cleared as the user was typing, it would allow the visually impaired to focus on what they are typing rather than listen to the feedback of the validation messages. When the user blurs, validation will kick in and announce validation messages again, but not until then.
 
-There's also one other problem we need to solve. Currently, the input element receives a classname `error` to show the field is invalid, but there isn't similar feedback for the screen reader. Correct this behavior by finding where the `error` classname is set in validator.ts and use the `aria-invalid` attribute set to `true` to notify screen readers the input is invalid.
+There's also one other problem to solve. Currently, the input element receives a classname `error` to show the field is invalid, but there isn't similar feedback for the screen reader. Correct this behavior by finding where the `error` classname is set in validator.ts and use the `aria-invalid` attribute set to `true` to notify screen readers that the input is invalid.
 
 {lang=javascript,line-numbers=off,crop-start-line=22,crop-end-line=29}
 <<[validator.ts](./protected/src/validator.ts)
 
-To clear out the validation messages as the user types, add a new `onkeyup` event listener in the `TextInputComponent connectedCallback` lifecycle. In the event listener callback, call a new method on `TextInputComponent` called `onChange`.
+To clear out the validation messages as the user types, add a new `onkeyup` event listener in the `TextInputComponent connectedCallback` lifecycle. In the event listener callback, call a new method on the `TextInputComponent` called `onChange`.
 
 {lang=javascript,line-numbers=off,crop-start-line=145,crop-end-line=151}
 <<[TextInput.ts](./protected/src/TextInput.ts)
