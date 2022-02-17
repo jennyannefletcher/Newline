@@ -9,7 +9,6 @@ isPublicLesson: true
 
 The internet should be accessible to everyone, including people with disabilities. When coding for the web browser, developers should consider users that require assistive devices to interact with the content. It may even be required by law. To conduct business with the U.S. Federal Government or follow best practices in accordance with the European Trade Commission (EU), web developers must follow [Web Content Accessibility Guidelines](https://www.w3.org/TR/WCAG20/) defined by the W3C Web Content Accessibility Group (WCAG). 
 
-
 In the previous chapter, I mentioned that `ElementInternals` provides the entire Accessibility Object Model (AOM) to a form-associated custom element. AOM is a browser specification that attempts to reduce the friction developers face when implementing accessible user interface components. AOM provides properties on the DOM node that allow developers to programmatically read and write accessibility-based properties. 
 
 Prior to the addition of AOM, developers were limited to WAI-ARIA, a set of HTML attributes that provide context to assistive technologies.
