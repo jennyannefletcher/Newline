@@ -4,9 +4,9 @@ description: How to style customized built-in elements
 isPublicLesson: true
 ---
 
-## Styling ButtonComponent
+## Styling the ButtonComponent
 
-While extending `HTMLButtomElement` has benefits, it means that Shadow DOM is not available in the context of `ButtonComponent`. That's because the native button element cannot have a `ShadowRoot`, so we lose the ability to encapsulate styling for the customized built-in element. That means you'll have to rely on CSS styles in a `<style>` tag external to the button element. Since you won't be able to target the button with `:host`, specify a unique CSS class name that can be used to select the custom element. The only place to do this safely in a customized built-in element is the `connectedCallback` lifecycle.
+While extending the `HTMLButtomElement` has benefits, it means that Shadow DOM is not available in the context of the `ButtonComponent`. That's because the native button element cannot have a `ShadowRoot`, so we lose the ability to encapsulate styling for the customized built-in element. This means you'll have to rely on CSS styles in a `<style>` tag external to the button element. Since you won't be able to target the button with `:host`, specify a unique CSS class name that can be used to select the custom element. The only place to do this safely in a customized built-in element is the `connectedCallback` lifecycle.
 
 In Button.ts, add the `connectedCallback` method and use the `add` method on `classList` to give the button a class name when added to DOM.
 
@@ -21,7 +21,7 @@ Inspect the element with Dev Tools and notice the `primary` and `in-button` clas
 ### Primary
 
 
-You don't have to give up modern conveniences like CSS-in-JS even though the CSS has to be declared in an external `<style>` tag that can be accessed by instances of `ButtonComponent`. In Button.ts, declare a `const` named `buttonStyles` and make it equal to a template string. Select the primary button variant with the selector `.in-button.primary` and set the styling per the mockup in Figma. 
+You don't have to give up modern conveniences like CSS-in-JS even though the CSS has to be declared in an external `<style>` tag that can be accessed by instances of the `ButtonComponent`. In Button.ts, declare a `const` named `buttonStyles` and make it equal to a template string. Select the primary button variant with the selector `.in-button.primary` and set the styling per the mockup in Figma. 
 
 {lang=javascript,line-numbers=off,crop-start-line=1,crop-end-line=15}
 <<[Button.ts](./protected/src/Button.head.ts)
@@ -31,9 +31,9 @@ To get the button styles in DOM, add a new method on the `ButtonComponent class`
 {lang=javascript,line-numbers=off,crop-start-line=25,crop-end-line=34}
 <<[Button.ts](./protected/src/Button.head.ts)
 
-In this method, create a new style element using `document.createElement` and set the `id` attribute to `in-button-style`. Using `textContent`, set the `buttonStyles` you declared earlier as the content of the style element, then append the style element to the `document.head`. When there are multiple instances of `ButtonComponent` in the same view, we don't want to keep adding the same stylesheet to `document.head`, so implement a conditional that prevents this from happening.
+In this method, create a new style element using `document.createElement` and set the `id` attribute to `in-button-style`. Using `textContent`, set the `buttonStyles` you declared earlier as the content of the style element, then append the style element to the `document.head`. When there are multiple instances of the `ButtonComponent` in the same view, we don't want to keep adding the same stylesheet to the `document.head`, so implement a conditional that prevents this from happening.
 
-When you are finished coding `addStylesheet`, make sure to call the method in the `connectedCallback`. 
+When you are finished coding the `addStylesheet`, make sure to call the method in the `connectedCallback`. 
 
 {lang=javascript,line-numbers=off,crop-start-line=21,crop-end-line=24}
 <<[Button.ts](./protected/src/Button.head.ts)
@@ -51,7 +51,7 @@ That's it for the default primary styles. Style the secondary and icon variants 
 
 ### Secondary
 
-Declare another story in Button.stories.js for the secondary button variant, naming the story `Secondary` and making sure to call `Template.bind({})`. Pass in `variant` and `label` through `Secondary.args`, setting the `variant` to `secondary`. 
+Declare another story in Button.stories.js for the secondary button variant. Name the story `Secondary` and make sure to call `Template.bind({})`. Pass in `variant` and `label` through `Secondary.args`, setting the `variant` to `secondary`. 
 
 {lang=javascript,line-numbers=off,crop-start-line=30,crop-end-line=34}
 <<[Button.stories.js](./protected/src/Button.stories.js)
@@ -91,12 +91,12 @@ Now that everything is scaffolded for the icon variant, proceed to style the but
 {lang=javascript,line-numbers=off,crop-start-line=30,crop-end-line=46}
 <<[Button.ts](./protected/src/Button.variants.ts)
 
-To ensure the SVG fits within the dimensions of the 44px button, select the `svg` with a CSS selector and style its `width` and `height` to `100%`. Since the icon variant has some padding, the SVG will actually display smaller. In order to transform the "plus" into a "cross", select the `svg` contained by the element with class name `.icon-close` and use CSS `transform` to rotate the SVG `45deg`.
+To ensure the SVG fits within the dimensions of the 44px button, select the `svg` with a CSS selector and style its `width` and `height` to `100%`. Since the icon variant has some padding, the SVG will actually have a smaller display. To transform the "plus" into a "cross", select the `svg` contained by the element with the class name `.icon-close` and use CSS `transform` to rotate the SVG `45deg`.
 
 {lang=javascript,line-numbers=off,crop-start-line=55,crop-end-line=62}
 <<[Button.ts](./protected/src/Button.style.ts)
 
-When you are finished, the icon variant should appear by default as it does in Figma.
+When you have finished, the icon variant should appear by default as it does in Figma.
 
 ![](./public/assets/icon.png)
 
@@ -115,7 +115,7 @@ The active state is styled in the same way, this time selecting each variant wit
 
 All the variants should now have the focus and active states styled. Test out these new behaviors in Storybook by navigating to the `Primary`, `Secondary`, and `Icon` stories. Click on the whitespace in the Storybook canvas and then focus on the button element by pressing the Tab key. With the button focused, press the Spacebar or Return key on the keyboard to see the active state appear.
 
-Buttons have a disabled state as well, usually set with the `disabled` attribute on the button element. To achieve the disabled state in Storybook, declare a new template in Button.stories.js named `DisabledTemplate`. This template should look remarkably similar to `Template`. However, the disabled attribute is set.
+Buttons have a disabled state as well, usually set with the `disabled` attribute on the button element. To achieve the disabled state in Storybook, declare a new template in Button.stories.js named `DisabledTemplate`. This template should look remarkably similar to `Template` except it has the disabled attribute set.
 
 {lang=javascript,line-numbers=off,crop-start-line=44,crop-end-line=56}
 <<[Button.stories.js](./protected/src/Button-svg.stories.js)
@@ -130,10 +130,10 @@ When the button is disabled, the element should not appear focused or active. Th
 {lang=javascript,line-numbers=off,crop-start-line=99,crop-end-line=108}
 <<[Button.ts](./protected/src/Button.style.ts)
 
-When you are finished styling the disabled state, the button should appear like below.
+When you have finished styling the disabled state, the button should appear as below.
 
 ![](./public/assets/disabled.png)
 
-So far, coding the `ButtonComponent` has been an exercise in styling the different states of the button with CSS. Since the button element cannot use Shadow DOM to encapsulate CSS styles, you injected a stylesheet into the `<head>` and selected CSS classnames applied to the instance of `ButtonComponent` to style the variants of the button. It's worth noting the CSS for `ButtonComponent` could be part of a global stylesheet, but as you'll observe in later chapters, when `ButtonComponent` is a child of another component's `ShadowRoot`, the shadow boundary will block any global styling. You'll account for this behavior in later chapters. 
+So far, coding the `ButtonComponent` has been an exercise in styling the different states of the button with CSS. Since the button element cannot use Shadow DOM to encapsulate CSS styles, you injected a stylesheet into the `<head>` and selected CSS classnames applied to the instance of `ButtonComponent` to style the variants of the button. It's worth noting the CSS for the `ButtonComponent` could be part of a global stylesheet, but as you'll observe in later chapters, when the `ButtonComponent` is a child of another component's `ShadowRoot`, the shadow boundary will block any global styling. You'll account for this behavior in later chapters. 
 
-Since `ButtonComponent` extends from `HTMLButtonElement`, you didn't have to implement behaviors of the button element. If `ButtonComponent` had extended from `HTMLElement` you would have had to implement event listeners to provide the same accessibility behaviors of `HTMLButtonElement`, namely the ability for users to activate the button when pressing the Select or Return keys on the keyboard.
+Since the `ButtonComponent` extends from the `HTMLButtonElement`, you haven't had to implement behaviors of the button element. If the `ButtonComponent` had extended from the `HTMLElement` you would have had to implement event listeners to provide the same accessibility behaviors of the `HTMLButtonElement`, namely enabling users to activate the button when pressing the Select or Return keys on the keyboard.
