@@ -33,9 +33,7 @@ Swap the `input type="submit"` in `FormTemplate` with the `button`. Set the `is`
 That's it! Since the `ButtonComponent` is a customized built-in element, integration was a snap. The elements in the layout appear very close vertically and don't have the same margin between them as the mockup in Figma. To fix this issue with the layout, add a global style to packages/style/style.css. Select each instance of the `TextInputComponent` with a CSS classname: `.form-control` and set the `margin-bottom`.
 
 ```css
-.form-control {
-    margin-bottom: var(--margin-md);
-}  
+.form-control {margin-bottom: var(--margin-md);}  
 ```
 
 For the remainder of this chapter, use the `Form` and `Icon` stories as a test bed for providing accessibility features to the `ButtonComponent` and the `TextInputComponent`.  
