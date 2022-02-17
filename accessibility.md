@@ -6,7 +6,7 @@ isPublicLesson: true
 
 ## Making the form accessible
 
-The decisions we've made have so far developing the login form resulted in a half-baked accessible experience for users who rely on the keyboard to navigate. `TextInputComponent` has some accessibility limitations. We've provided a CSS classname to provide visual feedback, but this poses a problem for the visually impaired, who cannot observe the feedback when the input becomes invalid. Furthermore, validations appended to Shadow DOM cannot be accessed by screen readers unless we provide some additional context using WAI-ARIA.
+The decisions we've made have so far in developing the login form have resulted in half-baked accessibility for users who rely on the keyboard to navigate. The `TextInputComponent` has some accessibility limitations. We've provided a CSS classname for visual feedback, but this poses a problem for the visually impaired, who can't see the feedback when the input becomes invalid. Furthermore, unless we provide some additional context using WAI-ARIA, screen readers can't access validations appended to the Shadow DOM.
 
 While `ButtonComponent` is useable via keyboard input by virtue of extending from `HTMLButtonElement`, the addition of an SVG in the icon variant prohibits visually impaired users from understanding the context of the button element. Screen readers rely on the content of the button to provide a label, which the primary and secondary button variants handle already. The icon variant lacks a text label that screen readers can analyze and read aloud to the user. 
 
